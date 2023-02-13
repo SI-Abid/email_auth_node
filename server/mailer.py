@@ -28,7 +28,7 @@ try:
     FROM_MAIL = OrgMail
     TO_MAIL = sys.argv[2]
     OTP = sys.argv[3]
-    COMPANY_NAME = "UNIPORT"
+    COMPANY_NAME = sys.argv[4]
     
     # Create the HTML file
     HTML = ""
@@ -41,6 +41,10 @@ try:
             if "{OTP}" in LINE:
                 LINE = LINE.replace("{OTP}", OTP)
 
+            # Checking the presence of the company name
+            if "{COMPANY_NAME}" in LINE:
+                LINE = LINE.replace("{COMPANY_NAME}", COMPANY_NAME)
+            
             HTML += LINE
             
     message = EmailMessage()
