@@ -81,12 +81,12 @@ router.get('/', async (req, res) => {
 router.get("/dart/auth/:mail", async (req, res) => {
     try {
         const { mail } = req.params;
-
+        console.log(mail)
         // Handle the server verification
         const { key, otpLength } = req.query;
         let { CompanyName } = req.query;
 
-        
+
         console.log("-------- Server Key Verification ---------")
         // console.log(key)
         // console.log(sha256(key))
@@ -104,7 +104,7 @@ router.get("/dart/auth/:mail", async (req, res) => {
             return
         }
 
-       
+
 
         if (CompanyName == undefined || CompanyName.length <= 0) {
             CompanyName = "";
@@ -114,7 +114,8 @@ router.get("/dart/auth/:mail", async (req, res) => {
             let OTP = generateOtp(otpLength ? otpLength : null);
             // console.log(path.resolve(__dirname, "../", 'mailer.py'))
             // return false
-            mailData = spawn('python', [path.resolve(__dirname, "../", 'mailer.py'), 'dart', mail, OTP, CompanyName])
+            mailData = spawn('python3', [path.resolve(__dirname, "../", 'mailer.py'), 'dart', mail, OTP, CompanyName])
+            // console.log(mailData)
             mailData.stdout.on('data', async (data) => {
                 const readerData = await data.toString();
                 console.log(data.toString());
@@ -153,9 +154,6 @@ router.get("/dart/auth/:mail", async (req, res) => {
         });
     }
 })
-
-
-
 
 
 module.exports = router;
