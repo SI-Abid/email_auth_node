@@ -155,5 +155,12 @@ router.get("/dart/auth/:mail", async (req, res) => {
     }
 })
 
+// endpoint for sending the current server time
+router.get("/time", async (req, res) => {
+    res.json({
+        status: 200,
+        time: new Date().getTime()
+    })
+})
 
 module.exports = router;
