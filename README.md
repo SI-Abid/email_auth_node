@@ -1,29 +1,40 @@
-# email_auth for production.
-# ***Test server working status : <img src=https://app-authenticator.herokuapp.com/test/img width=55>***
+# API Documentation
 
-## Node Extension to host your apps to a server for optimised production speeds using email_auth.
-# NOTE:
-  - KINDLY USE TEST SERVER, EXPECT A PATCH IN THE COMING WEEKS
+This API provides endpoints for sending emails and retrieving server time.
 
+## Getting Started
 
-# KINDLY USE OUTLOOK account with the server to work on.
-## Thanks [FOR THE IDEA ON OUTLOOK](https://github.com/saran-surya/email_auth_node/issues/37#issue-1305691263)
-  - DOCS will be updated accordingly
-# Visit the page here for the detailed steps 📌 <br/>[detailed setup of email-auth-node](https://saran-surya.github.io/email-auth-node/)
+Before using the API, make sure you have the necessary server key and environment variables set up in the `config.env` file.
 
+### Base URL
 
-## Steps : summary
-- Import the repository and mark it private
-- Clone it to your local system
-- perform ```npm install```
-- perform ```npm link```
-- create the configurations ```npx email-auth-node --generate```
-- create a gmail account and allow less secure apps
-- create a account on Heroku
-- create an app on heroku and connect it with the github repo you created
-- publish the server on heroku
-- Add a auth.config.dart file in the flutter project with the data from the config file of the generated config
-- Work seamlessly with email_auth with your custom production server
+The base URL for the API is: `https://web.uniport.up.railway.app`
 
-## If you like the repo a star would mean a lot.⭐
-## 💚 Thankyou.
+## Endpoints
+
+### Send Authentication Email
+
+- **Endpoint:** `/dart/auth/:mail`
+- **Method:** GET
+
+#### Parameters
+
+- `mail` (required): The recipient's email address.
+- `key` (required): Server key for verification.
+- `otpLength` (optional): Length of the OTP (default: 6).
+- `CompanyName` (optional): Name of the company.
+
+#### Example Usage
+
+```http
+GET https://web.uniport.up.railway.app/dart/auth/johndoe@example.com?key=your-server-key&otpLength=4&CompanyName=ACME
+```
+#### Response
+```json
+{
+    "status": 200,
+    "mail": "johndoe@example.com",
+    "OTP": "1234",
+    "success": true
+}
+```
