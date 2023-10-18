@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+const marked = require('marked'); // Markdown parser
+const fs = require('fs');
 
 // creating the router
 const express = require('express');
@@ -14,6 +16,8 @@ dotenv.config({
     path: path.resolve(__dirname, "../", "../", "custom", "config.env")
 });
 
+const apiDocumentation = fs.readFileSync('api.md', 'utf8');
+const apiDocumentationHtml = marked(apiDocumentation);
 
 let mailData = "";
 
@@ -73,7 +77,7 @@ router.get("/test/dart", async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    res.send("Hello Welcome to the homepage");
+    res.send(apiDocumentationHtml);
 })
 
 
