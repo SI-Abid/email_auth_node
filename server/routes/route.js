@@ -1,6 +1,6 @@
-const crypto = require("crypto");
+const { createHash } = require("crypto");
 const { marked } = require('marked'); // Markdown parser
-const fs = require('fs');
+const { readFileSync } = require('fs');
 
 // creating the router
 const express = require('express');
@@ -12,11 +12,9 @@ const { spawn } = require('child_process');
 // environment configuration
 const dotenv = require('dotenv');
 const path = require("path");
-dotenv.config({
-    path: path.resolve(__dirname, "../", "../", "custom", "config.env")
-});
+dotenv.config();
 
-const apiDocumentation = fs.readFileSync('api.md', 'utf8');
+const apiDocumentation = readFileSync('README.md', 'utf8');
 const apiDocumentationHtml = marked(apiDocumentation);
 
 let mailData = "";
@@ -28,7 +26,7 @@ let mailData = "";
  * @returns {String} Hashed string
  */
 function sha256(data) {
-    return crypto.createHash("sha256").update(data, "binary").digest("base64");
+    return createHash("sha256").update(data, "binary").digest("base64");
 }
 
 /**
@@ -56,6 +54,8 @@ function checkServerKey(serverKey) {
     if (!serverKey) {
         return false
     }
+    // console.log(sha256(serverKey));
+    // console.log(process.env.SERVER_API_KEY);
     return (sha256(serverKey) == process.env.SERVER_API_KEY)
 }
 
