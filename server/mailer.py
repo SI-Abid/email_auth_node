@@ -22,9 +22,11 @@ try:
 
     OrgMail = os.getenv("mailID")
     OrgPass = os.getenv("password")
-
+    OrgPass = os.getenv("PASS")
+    Server = os.getenv("SERVER")
 
     port = os.getenv("mailPort")
+    port = os.getenv("PORT")
     FROM_MAIL = OrgMail
     TO_MAIL = sys.argv[2]
     OTP = sys.argv[3]
@@ -56,7 +58,7 @@ try:
     
     try:
         context = ssl.create_default_context()
-        server = smtplib.SMTP_SSL('smtp.gmail.com', port, context=context)
+        server = smtplib.SMTP_SSL(Server, port, context=context)
         server.login(OrgMail, OrgPass)
         server.send_message(message)
         server.quit()
