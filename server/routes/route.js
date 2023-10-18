@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const marked = require('marked'); // Markdown parser
+const { marked } = require('marked'); // Markdown parser
 const fs = require('fs');
 
 // creating the router
